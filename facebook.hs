@@ -1,9 +1,11 @@
 {-# LANGUAGE TypeFamilies, QuasiQuotes #-}
 import Yesod
+import Yesod.Form
 import Web.Authenticate.Facebook
 import Data.Object
 import Data.Maybe (fromMaybe)
 import Network.HTTP.Enumerator
+
 
 data FB = FB Facebook
 fb :: FB
@@ -40,7 +42,8 @@ getFacebookR = do
 ^so'^
 |]
 
-main = withHttpEnumerator $ basicHandler 3000 fb
+-- main = withHttpEnumerator $ basicHandler 3000 fb
+main = withHttpEnumerator $ warpDebug 3000 fb
 
 objToHamlet :: StringObject -> Hamlet url
 objToHamlet (Scalar s) = [$hamlet|$string.s$|]
